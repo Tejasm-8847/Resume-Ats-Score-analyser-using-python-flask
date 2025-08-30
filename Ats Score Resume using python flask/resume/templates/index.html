@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body text-center py-5">
+                <h1 class="display-4 mb-4">Resume Optimization Assistant</h1>
+                <p class="lead">Enhance your resume to match job descriptions and increase your chances of getting hired</p>
+                
+                {% if current_user.is_authenticated %}
+                    <div class="mt-5">
+                        <a href="{{ url_for('upload_resume') }}" class="btn btn-primary btn-lg me-3">Upload Resume</a>
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary btn-lg">View Dashboard</a>
+                    </div>
+                {% else %}
+                    <div class="mt-5">
+                        <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg me-3">Login</a>
+                        <a href="{{ url_for('register') }}" class="btn btn-outline-secondary btn-lg">Register</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">How It Works</h2>
+                
+                <div class="row text-center">
+                    <div class="col-md-4 mb-3">
+                        <h4>1. Upload Resume</h4>
+                        <p>Upload your current resume and the job description you're applying for</p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h4>2. AI Analysis</h4>
+                        <p>Our AI compares your resume with the job description and identifies missing keywords</p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h4>3. Optimize</h4>
+                        <p>Get an optimized version of your resume with an ATS score and improvement suggestions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

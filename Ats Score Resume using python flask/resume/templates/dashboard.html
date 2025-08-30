@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2>Your Resume Dashboard</h2>
+    </div>
+    <div class="col-auto">
+        <a href="{{ url_for('upload_resume') }}" class="btn btn-primary">Upload New Resume</a>
+    </div>
+</div>
+
+{% if resumes %}
+    <div class="row">
+        {% for resume in resumes %}
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">{{ resume.filename }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Uploaded:</strong> {{ resume.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                        
+                        {% if resume.ats_score %}
+                            <p>
+                                <strong>ATS Score:</strong> 
+                                <span class="
+                                    {% if resume.ats_score >= 70 %}score-high
+                                    {% elif resume.ats_score >= 40 %}score-medium
+                                    {% else %}score-low{% endif %}
+                                ">
+                                    {{ "%.1f"|format(resume.ats_score) }}%
+                                </span>
+                            </p>
+                        {% else %}
+                            <p><em>No job description provided for analysis</em></p>
+                        {% endif %}
+                        
+                        <div class="d-grid gap-2">
+                            <a href="{{ url_for('view_resume', resume_id=resume.id) }}" class="btn btn-info">View Details</a>
+                            <a href="{{ url_for('download_resume', resume_id=resume.id) }}" class="btn btn-outline-secondary">Download Optimized Resume</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        <p>You haven't uploaded any resumes yet. Get started by uploading your resume!</p>
+        <a href="{{ url_for('upload_resume') }}" class="btn btn-primary mt-2">Upload Resume</a>
+    </div>
+{% endif %}
+{% endblock %}
+
